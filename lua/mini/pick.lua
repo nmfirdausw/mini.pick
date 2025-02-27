@@ -2245,8 +2245,8 @@ H.picker_compute_win_config = function(win_config, is_for_open)
   -- Tweak config values to ensure they are proper
   if config.border == 'none' then config.border = { '', ' ', '', '', '', ' ', '', '' } end
   -- - Account for border
-  config.height = math.min(config.height, max_height - 2)
-  config.width = math.min(config.width, max_width - 2)
+  config.height = math.min(config.height, max_height - 1)
+  config.width = math.min(config.width, max_width)
 
   return config
 end
@@ -2478,6 +2478,7 @@ H.picker_set_bordertext = function(picker)
     config = { title = { { H.fit_to_width(stritem_cur, win_width), 'MiniPickBorderText' } } }
   end
 
+  -- if view_state == 'info' then config = { title = { { H.fit_to_width('Info', win_width), 'MiniPickBorderText' } } } end
   if view_state == 'info' then config = { title = { { H.fit_to_width('Info', win_width), 'MiniPickBorderText' } } } end
 
   -- Compute helper footer only if Neovim version permits and not in busy
@@ -2486,7 +2487,7 @@ H.picker_set_bordertext = function(picker)
   if nvim_has_window_footer and not picker.is_busy then
     config.footer, config.footer_pos = H.picker_compute_footer(picker, win_id), 'left'
   end
-
+  
   -- Respect `options.content_from_bottom`
   if nvim_has_window_footer and opts.options.content_from_bottom then
     config.title, config.footer = config.footer, config.title
@@ -2504,7 +2505,7 @@ H.picker_compute_footer = function(picker, win_id)
   -- local source_name = string.format(' %s ', info.source_name)
   local source_name = info.source_name
   local n_marked_text = info.n_marked == 0 and '' or (info.n_marked .. '/')
-  local inds = string.format(' %s|%s|%s%s ', info.relative_current_ind, info.n_matched, n_marked_text, info.n_total)
+  local inds = string.format(' %s|%s|%s%s ', info.relative_current_ind, info.n_matched, n_marked_text, info.n_total) .. ' '
   local win_width, source_width, inds_width =
     vim.api.nvim_win_get_width(win_id), vim.fn.strchars(source_name), vim.fn.strchars(inds)
 
