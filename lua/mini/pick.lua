@@ -1050,7 +1050,7 @@ MiniPick.default_show = function(buf_id, items, query, opts)
 
   -- Compute and set lines. Compute prefix based on the whole items to allow
   -- separate `text` and `path` table fields (preferring second one).
-  local get_prefix_data = opts.show_icons and function(item) return H.get_icon(item, opts.icons) end
+  local get_prefix_data = opts.show_icons and function(item) return ' ' .. H.get_icon(item, opts.icons) end
     or function() return { text = '' } end
   local prefix_data = vim.tbl_map(get_prefix_data, items)
 
