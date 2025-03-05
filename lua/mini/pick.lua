@@ -3049,7 +3049,7 @@ H.get_icon = function(x, icons)
   if not has_devicons then return { text = icons.file, hl = 'MiniPickIconFile' } end
 
   local icon, hl = devicons.get_icon(vim.fn.fnamemodify(path, ':t'), nil, { default = false })
-  icon = type(icon) == 'string' and (icon .. ' ') or icons.file
+  icon = type(icon) == 'string' and (' ' .. icon .. ' ') or ' ' .. icons.file
   return { text = icon, hl = hl or 'MiniPickIconFile' }
 end
 
